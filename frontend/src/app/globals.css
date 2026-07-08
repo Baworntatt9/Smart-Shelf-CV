@@ -19,6 +19,7 @@
 
 html,
 body {
-  background: var(--color-ink);
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 78% -10%, #141c2b 0%, #0b0e14 60%);
   color: var(--color-fg);
 }
