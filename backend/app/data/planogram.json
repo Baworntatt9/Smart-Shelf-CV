@@ -1,0 +1,25 @@
+{
+  "name": "demo_shelf_3x6",
+  "rows": 3,
+  "cols": 6,
+  "slots": [
+    { "row": 0, "col": 0, "expected": "cola" },
+    { "row": 0, "col": 1, "expected": "cola" },
+    { "row": 0, "col": 2, "expected": "water" },
+    { "row": 0, "col": 3, "expected": "water" },
+    { "row": 0, "col": 4, "expected": "juice" },
+    { "row": 0, "col": 5, "expected": "juice" },
+    { "row": 1, "col": 0, "expected": "chips" },
+    { "row": 1, "col": 1, "expected": "chips" },
+    { "row": 1, "col": 2, "expected": "coffee" },
+    { "row": 1, "col": 3, "expected": "coffee" },
+    { "row": 1, "col": 4, "expected": "cola" },
+    { "row": 1, "col": 5, "expected": "cola" },
+    { "row": 2, "col": 0, "expected": "water" },
+    { "row": 2, "col": 1, "expected": "water" },
+    { "row": 2, "col": 2, "expected": "juice" },
+    { "row": 2, "col": 3, "expected": "juice" },
+    { "row": 2, "col": 4, "expected": "chips" },
+    { "row": 2, "col": 5, "expected": "chips" }
+  ]
+}
