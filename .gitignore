@@ -1,0 +1,39 @@
+# Claude Code / tooling
+.claude/
+.agents/
+skills-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# ML weights / data
+*.pt
+*.onnx
+*.weights
+runs/
+datasets/

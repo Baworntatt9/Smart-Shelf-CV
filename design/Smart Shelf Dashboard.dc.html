@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#0B0E14}
+    a{color:#4F7DFF;text-decoration:none}
+    a:hover{color:#7AA2FF}
+    @keyframes ss-spin{to{transform:rotate(360deg)}}
+    @keyframes ss-scan{0%{top:0%;opacity:0}10%{opacity:.9}90%{opacity:.9}100%{top:100%;opacity:0}}
+    @keyframes ss-pulse{0%,100%{opacity:.45}50%{opacity:1}}
+    input[type=range]{accent-color:#4F7DFF}
+  </style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(1200px 600px at 78% -10%, #141c2b 0%, #0B0E14 60%);color:#E7ECF3;font-family:'IBM Plex Sans','IBM Plex Sans Thai',sans-serif;padding:20px 24px 32px;display:flex;flex-direction:column;gap:18px">
+
+  <input type="file" accept="image/*" ref="{{ fileRef }}" onChange="{{ onFile }}" style="display:none">
+
+  <!-- HEADER -->
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:13px">
+      <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(150deg,#4F7DFF,#22D3EE);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(79,125,255,.35)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B0E14" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3h4M3 3v4M21 3h-4M21 3v4M3 21h4M3 21v-4M21 21h-4M21 21v-4"></path>
+          <rect x="8" y="8" width="8" height="8" rx="1.5"></rect>
+        </svg>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.2px;line-height:1">Smart&nbsp;Shelf</div>
+        <div style="font-size:12.5px;color:#8B96A8;margin-top:3px">Planogram Compliance · Computer Vision Demo</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:9px;padding:8px 13px;background:#141922;border:1px solid #232C39;border-radius:10px">
+        <span style="width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.18)"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#B9C2D0">YOLOv8n</span>
+        <span style="width:1px;height:13px;background:#2b3543"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#8B96A8">mAP <b style="color:#E7ECF3">0.87</b></span>
+      </div>
+      <button onClick="{{ onUpload }}" style="{{ uploadBtnStyle }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M12 4l-5 5M12 4l5 5"></path><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"></path></svg>
+        อัปโหลดรูปชั้นวาง
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div style="display:grid;grid-template-columns:minmax(0,1.75fr) minmax(370px,0.92fr);gap:18px;align-items:start">
+
+    <!-- LEFT: VIEWER -->
+    <section style="display:flex;flex-direction:column;gap:12px;min-width:0">
+      <!-- toolbar -->
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;background:#111722;border:1px solid #202836;border-radius:12px;padding:10px 12px">
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          <span style="font-size:11px;color:#66707f;text-transform:uppercase;letter-spacing:.6px;margin-right:3px">รูปตัวอย่าง</span>
+          <sc-for list="{{ sampleChips }}" as="s" hint-placeholder-count="3">
+            <button onClick="{{ s.onClick }}" style="{{ s.style }}">
+              <span style="width:7px;height:7px;border-radius:50%;background:{{ s.dot }}"></span>
+              {{ s.label }}
+            </button>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- viewer -->
+      <div style="position:relative;width:100%;aspect-ratio:16/10;border-radius:14px;overflow:hidden;border:1px solid #202836;background:linear-gradient(180deg,#1b232f 0%,#131a24 42%,#0d131b 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 20px 40px -20px rgba(0,0,0,.7)">
+        <!-- back wall texture -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.015) 0 2px,transparent 2px 40px);pointer-events:none"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 0%,transparent 40%,rgba(0,0,0,.5) 100%);pointer-events:none"></div>
+
+        <!-- shelf rails -->
+        <sc-for list="{{ rails }}" as="r" hint-placeholder-count="3">
+          <div style="{{ r.style }}"></div>
+        </sc-for>
+
+        <!-- products (detected on shelf) -->
+        <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
+          <div style="{{ p.boxStyle }}">
+            <div style="{{ p.capStyle }}"></div>
+            <div style="{{ p.bodyStyle }}">
+              <span style="{{ p.labelStyle }}">{{ p.code }}</span>
+            </div>
+          </div>
+        </sc-for>
+
+        <!-- ghost slots (missing) -->
+        <sc-for list="{{ ghosts }}" as="g" hint-placeholder-count="3">
+          <div style="{{ g.style }}">
+            <span style="{{ g.tagStyle }}">{{ g.tag }}</span>
+            <span style="{{ g.codeStyle }}">{{ g.code }}</span>
+          </div>
+        </sc-for>
+
+        <!-- bounding boxes -->
+        <sc-for list="{{ boxes }}" as="b" hint-placeholder-count="12">
+          <div style="{{ b.style }}">
+            <span style="{{ b.tagStyle }}">{{ b.tag }}</span>
+          </div>
+        </sc-for>
+
+        <!-- HUD overlay caption -->
+        <div style="position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:9px;padding:6px 11px;background:rgba(9,12,18,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.08);border-radius:9px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C6CFDC">
+          <span style="width:8px;height:8px;border-radius:50%;background:#F04352;animation:ss-pulse 1.6s infinite"></span>
+          {{ viewer.file }}
+          <span style="color:#5B6675">·</span>
+          <span style="color:#8B96A8">{{ viewer.meta }}</span>
+        </div>
+
+        <!-- analyzing overlay -->
+        <sc-if value="{{ analyzing }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:rgba(8,11,17,.66);backdrop-filter:blur(2px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:30">
+            <div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(79,125,255,.25);border-top-color:#4F7DFF;animation:ss-spin .8s linear infinite"></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#B9C2D0;letter-spacing:.4px">กำลังวิเคราะห์ · running inference…</div>
+            <div style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#22D3EE,transparent);animation:ss-scan 1.5s linear infinite;box-shadow:0 0 12px #22D3EE"></div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- legend -->
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:2px 4px;font-size:12.5px;color:#9aa5b4">
+        <div style="display:flex;align-items:center;gap:7px"><span style="width:12px;height:12px;border-radius:3px;background:#22C55E"></span>ตรงตาม planogram</div>
+        <div style="display:flex;align-items:center;gap:7px"><span style="width:12px;height:12px;border-radius:3px;background:#F5A623"></span>ผิดตำแหน่ง (Misplaced)</div>
+        <div style="display:flex;align-items:center;gap:7px"><span style="width:12px;height:12px;border-radius:3px;background:#F04352"></span>ขาด / Stock-out</div>
+      </div>
+    </section>
+
+    <!-- RIGHT: ANALYSIS -->
+    <aside style="display:flex;flex-direction:column;gap:14px;min-width:0">
+
+      <!-- metrics -->
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:11px">
+        <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:14px 15px">
+          <div style="font-size:11px;color:#8B96A8;text-transform:uppercase;letter-spacing:.6px">Detected</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;line-height:1.1;margin-top:6px">{{ metrics.detected }}<span style="font-size:15px;color:#5B6675;font-weight:500"> / {{ metrics.total }}</span></div>
+          <div style="font-size:11.5px;color:#66707f;margin-top:3px">สินค้าที่ตรวจพบ</div>
+        </div>
+        <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:14px 15px">
+          <div style="font-size:11px;color:#8B96A8;text-transform:uppercase;letter-spacing:.6px">Compliance</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;line-height:1.1;margin-top:6px;color:{{ metrics.compColor }}">{{ metrics.compliancePct }}<span style="font-size:16px">%</span></div>
+          <div style="height:5px;border-radius:3px;background:#232C39;margin-top:8px;overflow:hidden"><div style="{{ metrics.barStyle }}"></div></div>
+        </div>
+        <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:14px 15px">
+          <div style="font-size:11px;color:#8B96A8;text-transform:uppercase;letter-spacing:.6px">Issues</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;line-height:1.1;margin-top:6px;color:{{ metrics.issuesColor }}">{{ metrics.issues }}</div>
+          <div style="font-size:11.5px;color:#66707f;margin-top:3px">ขาด {{ metrics.missing }} · ผิดตำแหน่ง {{ metrics.misplaced }}</div>
+        </div>
+        <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:14px 15px">
+          <div style="font-size:11px;color:#8B96A8;text-transform:uppercase;letter-spacing:.6px">Conf. threshold</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:24px;line-height:1.1;margin-top:6px">{{ metrics.thr }}</div>
+          <input type="range" min="0.3" max="0.95" step="0.01" value="{{ confValue }}" onInput="{{ onConf }}" style="width:100%;margin-top:9px;cursor:pointer">
+        </div>
+      </div>
+
+      <!-- planogram grid -->
+      <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:15px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px">Planogram Grid</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#66707f">3 × 6 · เทียบแผนผัง</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px">
+          <sc-for list="{{ gridCells }}" as="c" hint-placeholder-count="18">
+            <div onMouseEnter="{{ c.onEnter }}" onMouseLeave="{{ c.onLeave }}" style="{{ c.style }}">
+              <span style="{{ c.codeStyle }}">{{ c.code }}</span>
+              <span style="{{ c.iconStyle }}">{{ c.icon }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- issues list -->
+      <div style="background:#141922;border:1px solid #232C39;border-radius:12px;padding:15px;display:flex;flex-direction:column;min-height:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px">ปัญหาที่ตรวจพบ</div>
+          <span style="{{ issueCountStyle }}">{{ metrics.issues }}</span>
+        </div>
+        <sc-if value="{{ hasIssues }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:8px;max-height:236px;overflow:auto">
+            <sc-for list="{{ issues }}" as="iss" hint-placeholder-count="4">
+              <div onMouseEnter="{{ iss.onEnter }}" onMouseLeave="{{ iss.onLeave }}" style="{{ iss.style }}">
+                <div style="{{ iss.iconWrap }}">{{ iss.icon }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:600;color:#E7ECF3">{{ iss.title }}</div>
+                  <div style="font-size:12px;color:#8B96A8;margin-top:2px">{{ iss.detail }}</div>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#66707f;text-align:right;white-space:nowrap">{{ iss.pos }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noIssues }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:9px;padding:26px 0;color:#22C55E">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 12.5l2.5 2.5 4.5-5"></path></svg>
+            <div style="font-size:13.5px;color:#B9C2D0">ชั้นวางตรงตาม planogram ทั้งหมด</div>
+          </div>
+        </sc-if>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 860 },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#4F7DFF&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#4F7DFF&quot;, &quot;#22D3EE&quot;, &quot;#8B5CF6&quot;, &quot;#22C55E&quot;] },
+  &quot;showConfidence&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Overlay&quot; },
+  &quot;defaultSample&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;normal&quot;, &quot;options&quot;: [&quot;normal&quot;, &quot;missing&quot;, &quot;swapped&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Data&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    sampleId: (this.props && this.props.defaultSample) || 'normal',
+    showBoxes: true,
+    showGrid: true,
+    showLabels: true,
+    conf: 0.5,
+    hovered: null,
+    analyzing: false,
+    uploadedName: null,
+  };
+
+  PRODUCTS = {
+    cola:   { name:'Cola',   code:'CL', shape:'can',    body:'#D6294A', light:'#F0556F', dark:'#951730', icon:'🥤' },
+    water:  { name:'Water',  code:'WT', shape:'bottle', body:'#2E86D6', light:'#5AA6EE', dark:'#1B5A97', icon:'💧' },
+    juice:  { name:'Juice',  code:'JU', shape:'bottle', body:'#F0872B', light:'#FBA657', dark:'#B35F16', icon:'🧃' },
+    chips:  { name:'Chips',  code:'CP', shape:'bag',    body:'#E9C13A', light:'#F6D869', dark:'#B4930F', icon:'🍟' },
+    coffee: { name:'Coffee', code:'CF', shape:'box',    body:'#6E4B34', light:'#916A4E', dark:'#452B1C', icon:'☕' },
+  };
+
+  PLAN = [
+    'cola','cola','water','water','juice','juice',
+    'chips','chips','coffee','coffee','cola','cola',
+    'water','water','juice','juice','chips','chips',
+  ];
+
+  BASE_CONF = [0.94,0.91,0.88,0.90,0.86,0.58, 0.89,0.87,0.83,0.90,0.95,0.62, 0.90,0.88,0.85,0.87,0.91,0.89];
+
+  samples() {
+    const P = this.PLAN;
+    const normal = P.slice();
+    const missing = P.slice(); missing[8]=null; missing[16]=null; missing[3]=null;
+    const swapped = P.slice(); swapped[4]='cola'; swapped[9]='cola'; swapped[12]='chips';
+    const c = this.BASE_CONF;
+    const swC = c.slice(); swC[4]=0.79; swC[9]=0.81; swC[12]=0.74;
+    return {
+      normal:  { det:normal,  conf:c,   file:'shelf_baseline_03.jpg',  th:'ปกติ' },
+      missing: { det:missing, conf:c,   file:'shelf_stockout_07.jpg',  th:'สินค้าขาด' },
+      swapped: { det:swapped, conf:swC, file:'shelf_misplace_02.jpg',  th:'สลับตำแหน่ง' },
+    };
+  }
+
+  // geometry (% of viewer)
+  MX=4.5; MT=7; MB=4;
+  geom(row,col){
+    const GW=100-2*this.MX, GH=100-this.MT-this.MB;
+    const CW=GW/6, CH=GH/3;
+    const cellL=this.MX+col*CW, cellT=this.MT+row*CH;
+    const fpW=CW*0.60, fpH=CH*0.80;
+    const fpL=cellL+(CW-fpW)/2;
+    const fpT=cellT+CH-fpH-CH*0.08;
+    return {CW,CH,cellL,cellT,fpL,fpT,fpW,fpH};
+  }
+
+  productStyles(type){
+    const p=this.PRODUCTS[type];
+    let bodyW, capW, capH, bodyRadius, cap;
+    if(p.shape==='can'){ bodyW='60%'; capW='60%'; capH='11%'; bodyRadius='5px';
+      cap={background:`linear-gradient(90deg,${p.dark},${p.light} 50%,${p.dark})`, borderRadius:'5px 5px 2px 2px'}; }
+    else if(p.shape==='bottle'){ bodyW='48%'; capW='24%'; capH='20%'; bodyRadius='4px 4px 5px 5px';
+      cap={background:p.dark, borderRadius:'3px 3px 0 0'}; }
+    else if(p.shape==='bag'){ bodyW='80%'; capW='80%'; capH='16%'; bodyRadius='3px 3px 6px 6px';
+      cap={background:`linear-gradient(90deg,${p.light},${p.dark})`, borderRadius:'4px 4px 0 0'}; }
+    else { bodyW='96%'; capW='96%'; capH='20%'; bodyRadius='3px';
+      cap={background:p.light, borderRadius:'3px 3px 0 0'}; }
+    const cyl = (p.shape==='can'||p.shape==='bottle');
+    const bodyBg = cyl
+      ? `linear-gradient(90deg,${p.dark},${p.body} 30%,${p.light} 52%,${p.body} 74%,${p.dark})`
+      : `linear-gradient(160deg,${p.light},${p.body} 55%,${p.dark})`;
+    return {
+      capStyle:{width:capW,height:capH,...cap,flex:'0 0 auto'},
+      bodyStyle:{width:bodyW,flex:'1 1 auto',background:bodyBg,borderRadius:bodyRadius,
+        borderTop:'1px solid rgba(255,255,255,.14)',boxShadow:'inset -2px 0 4px rgba(0,0,0,.3),inset 2px 0 3px rgba(255,255,255,.12)',
+        position:'relative',display:'flex',alignItems:'center',justifyContent:'center'},
+    };
+  }
+
+  statusColor(s){ return s==='correct'?'#22C55E':s==='misplaced'?'#F5A623':'#F04352'; }
+
+  buildSlots(){
+    const cur=this.samples()[this.state.sampleId];
+    const thr=this.state.conf;
+    const out=[];
+    for(let i=0;i<18;i++){
+      const row=Math.floor(i/6), col=i%6;
+      const expected=this.PLAN[i];
+      const rawDet=cur.det[i];
+      const conf=cur.conf[i];
+      const belowThr = rawDet!=null && conf<thr;
+      const eff = (rawDet!=null && conf>=thr) ? rawDet : null;
+      let status;
+      if(eff==null) status='missing';
+      else if(eff!==expected) status='misplaced';
+      else status='correct';
+      out.push({i,row,col,expected,detected:eff,rawDet,conf,status,belowThr});
+    }
+    return out;
+  }
+
+  selectSample(id){
+    clearTimeout(this._t);
+    this.setState({analyzing:true});
+    this._t=setTimeout(()=>this.setState({sampleId:id,analyzing:false,uploadedName:null}),620);
+  }
+  onFileSel(e){
+    const f=e.target.files && e.target.files[0]; if(!f)return;
+    clearTimeout(this._t);
+    this.setState({analyzing:true});
+    this._t=setTimeout(()=>this.setState({sampleId:'normal',analyzing:false,uploadedName:f.name}),950);
+    e.target.value='';
+  }
+
+  renderVals(){
+    const accent = (this.props && this.props.accent) || '#4F7DFF';
+    const showConf = !(this.props && this.props.showConfidence===false);
+    const st=this.state;
+    const slots=this.buildSlots();
+    const cur=this.samples()[st.sampleId];
+    const hov=st.hovered;
+
+    // rails
+    const GH=100-this.MT-this.MB, CH=GH/3, GW=100-2*this.MX;
+    const rails=[0,1,2].map(r=>({style:{position:'absolute',left:(this.MX-1.2)+'%',width:(GW+2.4)+'%',
+      top:(this.MT+(r+1)*CH-0.9)+'%',height:'1.4%',borderRadius:'2px',
+      background:'linear-gradient(180deg,#3a4658,#222c39)',boxShadow:'0 3px 6px rgba(0,0,0,.45)'}}));
+
+    // products + boxes + ghosts
+    const products=[], boxes=[], ghosts=[];
+    slots.forEach(s=>{
+      const g=this.geom(s.row,s.col);
+      const p=this.PRODUCTS[s.detected||s.expected];
+      const isHov = hov===s.i;
+      if(s.detected!=null){
+        const ps=this.productStyles(s.detected);
+        products.push({
+          code:st.showLabels?this.PRODUCTS[s.detected].code:'',
+          boxStyle:{position:'absolute',left:g.fpL+'%',top:g.fpT+'%',width:g.fpW+'%',height:g.fpH+'%',
+            display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',
+            filter:'drop-shadow(0 7px 9px rgba(0,0,0,.5))',transition:'transform .15s',
+            transform:isHov?'translateY(-3px)':'none',zIndex:isHov?12:5},
+          capStyle:ps.capStyle,
+          bodyStyle:ps.bodyStyle,
+          labelStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:'9px',fontWeight:600,
+            color:'rgba(0,0,0,.62)',background:'rgba(255,255,255,.82)',padding:'1px 4px',borderRadius:'3px'},
+        });
+        if(st.showBoxes){
+          const col=this.statusColor(s.status);
+          boxes.push({
+            style:{position:'absolute',left:(g.fpL-0.8)+'%',top:(g.fpT-1)+'%',width:(g.fpW+1.6)+'%',height:(g.fpH+1.4)+'%',
+              border:`2px solid ${col}`,borderRadius:'4px',boxShadow:isHov?`0 0 0 2px ${col}55, 0 0 18px ${col}88`:'none',
+              transition:'box-shadow .15s',zIndex:isHov?15:8,pointerEvents:'none'},
+            tag: showConf ? `${this.PRODUCTS[s.detected].name} ${s.conf.toFixed(2)}` : this.PRODUCTS[s.detected].name,
+            tagStyle:{position:'absolute',top:'-9px',left:'-2px',transform:'translateY(-100%)',
+              fontFamily:"'IBM Plex Mono',monospace",fontSize:'10px',fontWeight:600,lineHeight:1,
+              padding:'3px 5px',borderRadius:'3px',whiteSpace:'nowrap',color:'#0B0E14',background:col},
+          });
+        }
+      } else {
+        ghosts.push({
+          style:{position:'absolute',left:(g.fpL-0.5)+'%',top:(g.fpT-0.5)+'%',width:(g.fpW+1)+'%',height:(g.fpH+1)+'%',
+            border:`2px dashed ${s.belowThr?'#8B96A8':'#F04352'}`,borderRadius:'4px',
+            background:s.belowThr?'rgba(139,150,168,.08)':'rgba(240,67,82,.09)',
+            display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'3px',
+            boxShadow:hov===s.i?`0 0 16px ${s.belowThr?'#8B96A8':'#F04352'}88`:'none',zIndex:hov===s.i?15:6},
+          tag:s.belowThr?'< THRESHOLD':'MISSING',
+          tagStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:'9.5px',fontWeight:600,letterSpacing:'.5px',
+            color:s.belowThr?'#B9C2D0':'#F04352'},
+          code:'exp: '+this.PRODUCTS[s.expected].name,
+          codeStyle:{fontSize:'9px',color:'#66707f'},
+        });
+      }
+    });
+
+    // metrics
+    const total=18;
+    const detected=slots.filter(s=>s.detected!=null).length;
+    const correct=slots.filter(s=>s.status==='correct').length;
+    const missing=slots.filter(s=>s.status==='missing').length;
+    const misplaced=slots.filter(s=>s.status==='misplaced').length;
+    const compliance=Math.round(correct/total*100);
+    const compColor=compliance>=90?'#22C55E':compliance>=70?'#F5A623':'#F04352';
+    const issues=missing+misplaced;
+
+    // grid cells
+    const gridCells=slots.map(s=>{
+      const col=this.statusColor(s.status);
+      const isHov=hov===s.i;
+      const bg=s.status==='correct'?'rgba(34,197,94,.14)':s.status==='misplaced'?'rgba(245,166,35,.16)':'rgba(240,67,82,.16)';
+      return {
+        code:this.PRODUCTS[s.expected].code,
+        icon:s.status==='correct'?'✓':s.status==='misplaced'?'⇄':'✕',
+        onEnter:()=>this.setState({hovered:s.i}),
+        onLeave:()=>this.setState({hovered:null}),
+        style:{aspectRatio:'1/1',borderRadius:'8px',background:bg,border:`1.5px solid ${col}${isHov?'':'66'}`,
+          display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'1px',
+          cursor:'default',transition:'transform .12s,box-shadow .12s',
+          transform:isHov?'scale(1.06)':'none',boxShadow:isHov?`0 0 0 1px ${col},0 4px 12px ${col}55`:'none'},
+        codeStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:'11px',fontWeight:600,color:'#D5DCE6'},
+        iconStyle:{fontSize:'12px',color:col,fontWeight:700,lineHeight:1},
+      };
+    });
+
+    // issues
+    const issueList=slots.filter(s=>s.status!=='correct').map(s=>{
+      const isMissing=s.status==='missing';
+      const col=this.statusColor(s.status);
+      const isHov=hov===s.i;
+      return {
+        onEnter:()=>this.setState({hovered:s.i}),
+        onLeave:()=>this.setState({hovered:null}),
+        style:{display:'flex',alignItems:'center',gap:'11px',padding:'9px 10px',borderRadius:'9px',
+          border:`1px solid ${isHov?col:'#232C39'}`,background:isHov?col+'14':'#10151d',
+          transition:'background .12s,border-color .12s',cursor:'default'},
+        icon:isMissing?(s.belowThr?'?':'✕'):'⇄',
+        iconWrap:{width:'30px',height:'30px',flex:'0 0 auto',borderRadius:'8px',display:'flex',alignItems:'center',
+          justifyContent:'center',fontSize:'14px',fontWeight:700,color:col,background:col+'22'},
+        title:isMissing?(s.belowThr?`ความเชื่อมั่นต่ำ · ${this.PRODUCTS[s.expected].name}`:`สินค้าขาด · ${this.PRODUCTS[s.expected].name}`)
+                       :`ผิดตำแหน่ง · ${this.PRODUCTS[s.expected].name}`,
+        detail:isMissing?(s.belowThr?`conf ${s.conf.toFixed(2)} < threshold ${st.conf.toFixed(2)}`:`ควรมี ${this.PRODUCTS[s.expected].name} แต่ตรวจไม่พบ`)
+                        :`คาดว่า ${this.PRODUCTS[s.expected].name} แต่พบ ${this.PRODUCTS[s.detected].name}`,
+        pos:`R${s.row+1}·C${s.col+1}`,
+      };
+    });
+
+    // sample chips
+    const dots={normal:'#22C55E',missing:'#F04352',swapped:'#F5A623'};
+    const chipLabels={normal:'ปกติ',missing:'สินค้าขาด',swapped:'สลับตำแหน่ง'};
+    const sampleChips=['normal','missing','swapped'].map(id=>{
+      const active=st.sampleId===id && !st.uploadedName;
+      return {label:chipLabels[id],dot:dots[id],onClick:()=>this.selectSample(id),
+        style:{display:'inline-flex',alignItems:'center',gap:'6px',padding:'7px 12px',borderRadius:'8px',cursor:'pointer',
+          fontFamily:"'IBM Plex Sans Thai','IBM Plex Sans',sans-serif",fontSize:'12.5px',fontWeight:500,
+          border:`1px solid ${active?accent:'#2a3442'}`,background:active?accent+'22':'#161c26',
+          color:active?'#E7ECF3':'#9aa5b4',transition:'all .12s'}};
+    });
+
+    // toggles
+    const mkToggle=(key,label)=>{
+      const active=st[key];
+      return {label,onClick:()=>this.setState({[key]:!st[key]}),
+        style:{padding:'7px 11px',borderRadius:'8px',cursor:'pointer',fontFamily:"'IBM Plex Mono',monospace",fontSize:'11.5px',
+          fontWeight:500,border:`1px solid ${active?accent:'#2a3442'}`,background:active?accent+'1f':'#161c26',
+          color:active?'#cfe0ff':'#66707f',transition:'all .12s'}};
+    };
+    const toggles=[mkToggle('showBoxes','Boxes'),mkToggle('showGrid','Grid'),mkToggle('showLabels','Labels')];
+
+    return {
+      rails, products, boxes, ghosts, gridCells,
+      sampleChips, toggles,
+      confValue: st.conf,
+      analyzing: st.analyzing,
+      hasIssues: issueList.length>0,
+      noIssues: issueList.length===0,
+      issues: issueList,
+      viewer:{ file: st.uploadedName || cur.file, meta:`3×6 grid · ${detected}/${total} SKU · ${cur.th}` },
+      metrics:{
+        total, detected, missing, misplaced, issues,
+        compliancePct: compliance, compColor,
+        issuesColor: issues===0?'#22C55E':issues<=2?'#F5A623':'#F04352',
+        thr: st.conf.toFixed(2),
+        barStyle:{width:compliance+'%',height:'100%',borderRadius:'3px',background:compColor,transition:'width .3s'},
+      },
+      issueCountStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:'12px',fontWeight:600,padding:'3px 9px',borderRadius:'20px',
+        color:issueList.length?'#F04352':'#22C55E',background:issueList.length?'rgba(240,67,82,.15)':'rgba(34,197,94,.15)'},
+      onConf:(e)=>this.setState({conf:parseFloat(e.target.value)}),
+      onUpload:()=>{ if(this._file) this._file.click(); },
+      onFile:(e)=>this.onFileSel(e),
+      fileRef:(el)=>{ this._file=el; },
+      uploadBtnStyle:{display:'inline-flex',alignItems:'center',gap:'8px',padding:'9px 15px',borderRadius:'10px',cursor:'pointer',
+        fontFamily:"'IBM Plex Sans Thai','IBM Plex Sans',sans-serif",fontSize:'13px',fontWeight:600,border:'none',
+        background:`linear-gradient(150deg,${accent},#22D3EE)`,color:'#08111f',
+        boxShadow:`0 6px 16px ${accent}44`},
+    };
+  }
+}
+</script>
+</body>
+</html>
