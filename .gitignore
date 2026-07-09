@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+venv/
+env/
+.venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model weights (large, share via Drive/team channel instead)
+*.pt
+
+# YOLO training run outputs
+smart_shelf_cv/
+runs/
+
+# Dataset images (large, re-exportable from Roboflow anytime)
+train/
+valid/
+test/
+*.zip
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Environment / API keys
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

@@ -7,7 +7,8 @@
       "WebFetch(domain:www.kaggle.com)",
       "WebSearch",
       "WebFetch(domain:docs.roboflow.com)",
-      "WebFetch(domain:universe.roboflow.com)"
+      "WebFetch(domain:universe.roboflow.com)",
+      "Bash(python -m py_compile app.py)"
     ]
   }
 }
