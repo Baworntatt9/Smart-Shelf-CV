@@ -3,7 +3,11 @@
     "allow": [
       "Bash(python -c ' *)",
       "Bash(pip install *)",
-      "Bash(python -c \"print\\(open\\('out.txt', encoding='utf-8'\\).read\\(\\)\\)\")"
+      "Bash(python -c \"print\\(open\\('out.txt', encoding='utf-8'\\).read\\(\\)\\)\")",
+      "WebFetch(domain:www.kaggle.com)",
+      "WebSearch",
+      "WebFetch(domain:docs.roboflow.com)",
+      "WebFetch(domain:universe.roboflow.com)"
     ]
   }
 }

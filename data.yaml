@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 7
+names: ['Bottle', 'Box', 'Carton', 'Jar', 'Pouch', 'Tube', 'can']
+
+roboflow:
+  workspace: emils-workspace-zjhj0
+  project: sku-110k-vhwhz
+  version: dataset
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/emils-workspace-zjhj0/sku-110k-vhwhz/dataset/dataset
