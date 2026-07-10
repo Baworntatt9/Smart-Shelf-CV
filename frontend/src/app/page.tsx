@@ -8,11 +8,15 @@ import GridCell from "@/components/dashboard/GridCell";
 import Header from "@/components/dashboard/Header";
 import IssueRow from "@/components/dashboard/IssueRow";
 import Legend from "@/components/dashboard/Legend";
+import ConfControl from "@/components/dashboard/ConfControl";
 import Metric from "@/components/dashboard/Metric";
 import Panel from "@/components/dashboard/Panel";
 import ShelfViewer from "@/components/dashboard/ShelfViewer";
 import { analyzeShelf } from "@/lib/api";
+import { applyThreshold } from "@/lib/threshold";
 import type { ShelfAnalysis } from "@/lib/types";
+
+const CONF_FLOOR = 0.25; // backend detection floor — slider can't go lower
 
 const ACCEPT = ["image/jpeg", "image/png", "image/webp"];
 
@@ -23,6 +27,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ShelfAnalysis | null>(null);
   const [show, setShow] = useState({ boxes: true, grid: false, labels: false });
+  const [conf, setConf] = useState(CONF_FLOOR);
 
   async function handleFile(file: File | undefined) {
     if (!file) return;
@@ -43,13 +48,16 @@ export default function Home() {
     }
   }
 
-  const issues = result?.slots.filter((s) => s.status !== "correct") ?? [];
-  const issueCount = result ? result.missing + result.misplaced : 0;
+  // Re-derive the analysis at the chosen threshold (client-side, instant).
+  const view = result ? applyThreshold(result, conf) : null;
+
+  const issues = view?.slots.filter((s) => s.status !== "correct") ?? [];
+  const issueCount = view ? view.missing + view.misplaced : 0;
 
   // Group slots into rows for the heatmap (rows have varying column counts).
-  const gridRows = result
+  const gridRows = view
     ? Object.values(
-        result.slots.reduce<Record<number, typeof result.slots>>((acc, s) => {
+        view.slots.reduce<Record<number, typeof view.slots>>((acc, s) => {
           (acc[s.row] ??= []).push(s);
           return acc;
         }, {})
@@ -112,6 +120,7 @@ export default function Home() {
             loading={loading}
             result={result}
             show={show}
+            conf={conf}
             onPick={() => inputRef.current?.click()}
             onFile={handleFile}
           />
@@ -125,27 +134,32 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-[11px]">
             <Metric
               label="Detected"
-              value={result ? `${result.detected}` : "—"}
-              suffix={result ? ` / ${result.total}` : " / —"}
+              value={view ? `${view.detected}` : "—"}
+              suffix={view ? ` / ${view.total}` : " / —"}
               hint="สินค้าที่ตรวจพบ"
             />
             <Metric
               label="Compliance"
-              value={result ? `${result.compliance_pct}` : "—"}
-              suffix={result ? "%" : ""}
-              hint={result ? undefined : "รออัปโหลด"}
+              value={view ? `${view.compliance_pct}` : "—"}
+              suffix={view ? "%" : ""}
+              hint={view ? undefined : "รออัปโหลด"}
               accentValue
             />
             <Metric
               label="Issues"
-              value={result ? `${issueCount}` : "—"}
+              value={view ? `${issueCount}` : "—"}
               hint={
-                result
-                  ? `ขาด ${result.missing} · ผิดตำแหน่ง ${result.misplaced}`
+                view
+                  ? `ขาด ${view.missing} · ผิดตำแหน่ง ${view.misplaced}`
                   : "ขาด — · ผิดตำแหน่ง —"
               }
             />
-            <Metric label="Conf. threshold" value="0.25" mono hint="ค่าเริ่มต้น" />
+            <ConfControl
+              value={conf}
+              min={CONF_FLOOR}
+              disabled={!result}
+              onChange={setConf}
+            />
           </div>
 
           {/* planogram grid */}

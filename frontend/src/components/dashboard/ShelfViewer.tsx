@@ -13,6 +13,7 @@ interface Props {
   loading: boolean;
   result: ShelfAnalysis | null;
   show: OverlayToggles;
+  conf: number;
   onPick: () => void;
   onFile: (file: File | undefined) => void;
 }
@@ -22,6 +23,7 @@ export default function ShelfViewer({
   loading,
   result,
   show,
+  conf,
   onPick,
   onFile,
 }: Props) {
@@ -74,6 +76,7 @@ export default function ShelfViewer({
               height={dim.h}
               rows={rows}
               show={show}
+              conf={conf}
             />
           )}
         </div>

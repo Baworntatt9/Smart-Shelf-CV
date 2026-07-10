@@ -12,6 +12,7 @@ interface Props {
   height: number;
   rows: number; // planogram row count, for the grid guide lines
   show: OverlayToggles;
+  conf: number; // boxes below this are dimmed as "below threshold"
 }
 
 // SVG overlay drawn on top of the shelf image. Its viewBox matches the
@@ -23,6 +24,7 @@ export default function DetectionOverlay({
   height,
   rows,
   show,
+  conf,
 }: Props) {
   if (!width || !height) return null;
 
@@ -66,10 +68,13 @@ export default function DetectionOverlay({
       {detections.map((d, i) => {
         const w = d.box.x2 - d.box.x1;
         const h = d.box.y2 - d.box.y1;
-        const color = colorFor(d.status);
+        // Below the chosen threshold the box is dropped from compliance;
+        // show it dimmed + dashed rather than colouring it by status.
+        const below = d.confidence < conf;
+        const color = below ? "#8b96a8" : colorFor(d.status);
         const label = `${d.label} ${(d.confidence * 100).toFixed(0)}%`;
         return (
-          <g key={i}>
+          <g key={i} opacity={below ? 0.5 : 1}>
             {show.boxes && (
               <rect
                 x={d.box.x1}
@@ -79,6 +84,7 @@ export default function DetectionOverlay({
                 fill="none"
                 stroke={color}
                 strokeWidth={stroke}
+                strokeDasharray={below ? `${stroke * 2.5} ${stroke * 2}` : undefined}
                 rx={stroke}
               />
             )}
