@@ -7,387 +7,849 @@
     {
       "row": 0,
       "col": 0,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 0.0,
+        "y1": 79.4,
+        "x2": 40.9,
+        "y2": 321.3
+      }
     },
     {
       "row": 0,
       "col": 1,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 37.0,
+        "y1": 79.6,
+        "x2": 131.9,
+        "y2": 326.1
+      }
     },
     {
       "row": 0,
       "col": 2,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 131.6,
+        "y1": 77.2,
+        "x2": 228.0,
+        "y2": 329.6
+      }
     },
     {
       "row": 0,
       "col": 3,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 231.0,
+        "y1": 74.4,
+        "x2": 339.1,
+        "y2": 329.7
+      }
     },
     {
       "row": 0,
       "col": 4,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 228.3,
+        "y1": 66.0,
+        "x2": 341.9,
+        "y2": 329.0
+      }
     },
     {
       "row": 0,
       "col": 5,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 356.3,
+        "y1": 30.6,
+        "x2": 460.0,
+        "y2": 331.3
+      }
     },
     {
       "row": 0,
       "col": 6,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 363.0,
+        "y1": 33.8,
+        "x2": 462.1,
+        "y2": 329.3
+      }
     },
     {
       "row": 0,
       "col": 7,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 453.8,
+        "y1": 31.8,
+        "x2": 560.0,
+        "y2": 325.6
+      }
     },
     {
       "row": 0,
       "col": 8,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 455.5,
+        "y1": 31.2,
+        "x2": 558.7,
+        "y2": 329.9
+      }
     },
     {
       "row": 0,
       "col": 9,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 561.5,
+        "y1": 42.7,
+        "x2": 669.4,
+        "y2": 324.8
+      }
     },
     {
       "row": 0,
       "col": 10,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 566.1,
+        "y1": 48.2,
+        "x2": 668.8,
+        "y2": 327.9
+      }
     },
     {
       "row": 0,
       "col": 11,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 663.1,
+        "y1": 56.5,
+        "x2": 768.5,
+        "y2": 323.9
+      }
     },
     {
       "row": 0,
       "col": 12,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 667.1,
+        "y1": 51.7,
+        "x2": 770.0,
+        "y2": 327.9
+      }
     },
     {
       "row": 0,
       "col": 13,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 772.6,
+        "y1": 110.4,
+        "x2": 874.9,
+        "y2": 328.7
+      }
     },
     {
       "row": 0,
       "col": 14,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 874.5,
+        "y1": 108.5,
+        "x2": 979.1,
+        "y2": 329.9
+      }
     },
     {
       "row": 0,
       "col": 15,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 975.6,
+        "y1": 47.0,
+        "x2": 1086.3,
+        "y2": 329.2
+      }
     },
     {
       "row": 0,
       "col": 16,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 982.1,
+        "y1": 46.4,
+        "x2": 1087.2,
+        "y2": 324.8
+      }
     },
     {
       "row": 0,
       "col": 17,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1084.7,
+        "y1": 52.9,
+        "x2": 1191.2,
+        "y2": 324.5
+      }
     },
     {
       "row": 0,
       "col": 18,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1085.2,
+        "y1": 51.0,
+        "x2": 1192.5,
+        "y2": 328.0
+      }
     },
     {
       "row": 0,
       "col": 19,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1188.0,
+        "y1": 64.2,
+        "x2": 1283.6,
+        "y2": 321.9
+      }
     },
     {
       "row": 0,
       "col": 20,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1190.4,
+        "y1": 67.4,
+        "x2": 1286.6,
+        "y2": 326.2
+      }
     },
     {
       "row": 0,
       "col": 21,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1275.9,
+        "y1": 72.5,
+        "x2": 1367.6,
+        "y2": 321.5
+      }
     },
     {
       "row": 0,
       "col": 22,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1278.8,
+        "y1": 70.8,
+        "x2": 1369.9,
+        "y2": 327.3
+      }
     },
     {
       "row": 0,
       "col": 23,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1368.0,
+        "y1": 81.8,
+        "x2": 1475.4,
+        "y2": 326.3
+      }
     },
     {
       "row": 0,
       "col": 24,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1482.3,
+        "y1": 81.6,
+        "x2": 1583.9,
+        "y2": 328.4
+      }
     },
     {
       "row": 0,
       "col": 25,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1581.3,
+        "y1": 82.3,
+        "x2": 1684.5,
+        "y2": 326.2
+      }
     },
     {
       "row": 0,
       "col": 26,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1684.5,
+        "y1": 84.2,
+        "x2": 1783.3,
+        "y2": 321.9
+      }
     },
     {
       "row": 0,
       "col": 27,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1775.1,
+        "y1": 87.9,
+        "x2": 1804.3,
+        "y2": 320.8
+      }
     },
     {
       "row": 1,
       "col": 0,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 3.1,
+        "y1": 469.3,
+        "x2": 94.7,
+        "y2": 735.4
+      }
     },
     {
       "row": 1,
       "col": 1,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 0.0,
+        "y1": 459.5,
+        "x2": 102.9,
+        "y2": 739.2
+      }
     },
     {
       "row": 1,
       "col": 2,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 91.0,
+        "y1": 460.4,
+        "x2": 190.2,
+        "y2": 734.6
+      }
     },
     {
       "row": 1,
       "col": 3,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 89.7,
+        "y1": 456.1,
+        "x2": 200.1,
+        "y2": 736.5
+      }
     },
     {
       "row": 1,
       "col": 4,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 196.8,
+        "y1": 469.8,
+        "x2": 297.5,
+        "y2": 735.5
+      }
     },
     {
       "row": 1,
       "col": 5,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 191.5,
+        "y1": 459.4,
+        "x2": 305.1,
+        "y2": 737.3
+      }
     },
     {
       "row": 1,
       "col": 6,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 302.1,
+        "y1": 460.9,
+        "x2": 405.1,
+        "y2": 735.2
+      }
     },
     {
       "row": 1,
       "col": 7,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 416.9,
+        "y1": 465.9,
+        "x2": 517.7,
+        "y2": 732.8
+      }
     },
     {
       "row": 1,
       "col": 8,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 416.2,
+        "y1": 450.8,
+        "x2": 520.5,
+        "y2": 733.3
+      }
     },
     {
       "row": 1,
       "col": 9,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 529.1,
+        "y1": 440.4,
+        "x2": 630.7,
+        "y2": 734.8
+      }
     },
     {
       "row": 1,
       "col": 10,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 524.6,
+        "y1": 441.7,
+        "x2": 635.5,
+        "y2": 736.5
+      }
     },
     {
       "row": 1,
       "col": 11,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 639.6,
+        "y1": 439.5,
+        "x2": 748.1,
+        "y2": 735.1
+      }
     },
     {
       "row": 1,
       "col": 12,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 643.9,
+        "y1": 439.7,
+        "x2": 746.6,
+        "y2": 727.9
+      }
     },
     {
       "row": 1,
       "col": 13,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 759.6,
+        "y1": 441.2,
+        "x2": 863.2,
+        "y2": 731.3
+      }
     },
     {
       "row": 1,
       "col": 14,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 869.4,
+        "y1": 463.9,
+        "x2": 970.1,
+        "y2": 733.8
+      }
     },
     {
       "row": 1,
       "col": 15,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 978.7,
+        "y1": 474.5,
+        "x2": 1082.9,
+        "y2": 736.5
+      }
     },
     {
       "row": 1,
       "col": 16,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1085.0,
+        "y1": 480.3,
+        "x2": 1192.0,
+        "y2": 739.3
+      }
     },
     {
       "row": 1,
       "col": 17,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1087.4,
+        "y1": 494.1,
+        "x2": 1192.1,
+        "y2": 734.5
+      }
     },
     {
       "row": 1,
       "col": 18,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1190.3,
+        "y1": 478.7,
+        "x2": 1296.9,
+        "y2": 740.4
+      }
     },
     {
       "row": 1,
       "col": 19,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1196.9,
+        "y1": 482.2,
+        "x2": 1293.2,
+        "y2": 738.4
+      }
     },
     {
       "row": 1,
       "col": 20,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1286.9,
+        "y1": 484.2,
+        "x2": 1381.4,
+        "y2": 735.8
+      }
     },
     {
       "row": 1,
       "col": 21,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1285.1,
+        "y1": 479.4,
+        "x2": 1383.7,
+        "y2": 739.5
+      }
     },
     {
       "row": 1,
       "col": 22,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1376.5,
+        "y1": 480.6,
+        "x2": 1483.1,
+        "y2": 739.9
+      }
     },
     {
       "row": 1,
       "col": 23,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1380.5,
+        "y1": 484.7,
+        "x2": 1481.5,
+        "y2": 737.1
+      }
     },
     {
       "row": 1,
       "col": 24,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1472.3,
+        "y1": 482.2,
+        "x2": 1570.9,
+        "y2": 738.7
+      }
     },
     {
       "row": 1,
       "col": 25,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1477.2,
+        "y1": 485.7,
+        "x2": 1568.9,
+        "y2": 736.7
+      }
     },
     {
       "row": 1,
       "col": 26,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1561.9,
+        "y1": 485.1,
+        "x2": 1655.0,
+        "y2": 737.7
+      }
     },
     {
       "row": 1,
       "col": 27,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1562.6,
+        "y1": 485.8,
+        "x2": 1656.6,
+        "y2": 735.6
+      }
     },
     {
       "row": 1,
       "col": 28,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1656.9,
+        "y1": 487.9,
+        "x2": 1752.6,
+        "y2": 735.2
+      }
     },
     {
       "row": 1,
       "col": 29,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1655.9,
+        "y1": 487.9,
+        "x2": 1755.7,
+        "y2": 736.7
+      }
     },
     {
       "row": 1,
       "col": 30,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1756.5,
+        "y1": 502.5,
+        "x2": 1805.0,
+        "y2": 730.2
+      }
     },
     {
       "row": 2,
       "col": 0,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 0.0,
+        "y1": 941.7,
+        "x2": 38.0,
+        "y2": 1170.1
+      }
     },
     {
       "row": 2,
       "col": 1,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 46.0,
+        "y1": 936.1,
+        "x2": 136.6,
+        "y2": 1171.0
+      }
     },
     {
       "row": 2,
       "col": 2,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 145.9,
+        "y1": 833.4,
+        "x2": 277.6,
+        "y2": 1167.4
+      }
     },
     {
       "row": 2,
       "col": 3,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 168.1,
+        "y1": 834.5,
+        "x2": 279.6,
+        "y2": 1160.0
+      }
     },
     {
       "row": 2,
       "col": 4,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 274.5,
+        "y1": 830.3,
+        "x2": 398.8,
+        "y2": 1169.1
+      }
     },
     {
       "row": 2,
       "col": 5,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 281.9,
+        "y1": 831.7,
+        "x2": 392.3,
+        "y2": 1156.4
+      }
     },
     {
       "row": 2,
       "col": 6,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 389.9,
+        "y1": 819.6,
+        "x2": 518.6,
+        "y2": 1159.8
+      }
     },
     {
       "row": 2,
       "col": 7,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 397.3,
+        "y1": 828.6,
+        "x2": 525.1,
+        "y2": 1169.4
+      }
     },
     {
       "row": 2,
       "col": 8,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 538.7,
+        "y1": 818.4,
+        "x2": 671.2,
+        "y2": 1170.9
+      }
     },
     {
       "row": 2,
       "col": 9,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 670.5,
+        "y1": 818.0,
+        "x2": 797.9,
+        "y2": 1171.1
+      }
     },
     {
       "row": 2,
       "col": 10,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 798.1,
+        "y1": 808.7,
+        "x2": 928.8,
+        "y2": 1169.4
+      }
     },
     {
       "row": 2,
       "col": 11,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 944.0,
+        "y1": 815.5,
+        "x2": 1078.9,
+        "y2": 1170.2
+      }
     },
     {
       "row": 2,
       "col": 12,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1075.8,
+        "y1": 823.2,
+        "x2": 1202.4,
+        "y2": 1161.5
+      }
     },
     {
       "row": 2,
       "col": 13,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1074.8,
+        "y1": 831.2,
+        "x2": 1206.7,
+        "y2": 1169.1
+      }
     },
     {
       "row": 2,
       "col": 14,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1192.2,
+        "y1": 830.1,
+        "x2": 1339.4,
+        "y2": 1168.1
+      }
     },
     {
       "row": 2,
       "col": 15,
-      "expected": "Bottle"
+      "expected": "Bottle",
+      "box": {
+        "x1": 1204.8,
+        "y1": 835.9,
+        "x2": 1333.1,
+        "y2": 1167.1
+      }
     },
     {
       "row": 2,
       "col": 16,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1336.5,
+        "y1": 811.4,
+        "x2": 1560.1,
+        "y2": 1165.8
+      }
     },
     {
       "row": 2,
       "col": 17,
-      "expected": "Jar"
+      "expected": "Jar",
+      "box": {
+        "x1": 1539.5,
+        "y1": 819.3,
+        "x2": 1771.1,
+        "y2": 1151.9
+      }
     }
   ]
 }

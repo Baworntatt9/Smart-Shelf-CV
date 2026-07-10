@@ -2,9 +2,13 @@
 
 `map_to_grid` turns raw detection boxes into (row, col) slots by
 clustering on the box y-centers into rows, then ordering each row left
-to right. This handles real shelves where rows hold different item
-counts and widths (no fixed uniform lattice). `compare_with_planogram`
-labels each slot correct / misplaced / missing and computes compliance.
+to right — used when *building* a planogram from a reference image.
+
+`compare_with_planogram` scores a shelf against a reference. It matches
+each planogram slot to the detection that best overlaps its expected
+pixel box (position-based, greedy by IoU), not by column index. So
+removing or swapping one item only fails that item's slot instead of
+shifting every slot after it.
 """
 
 from __future__ import annotations
@@ -12,6 +16,9 @@ from __future__ import annotations
 from app.schemas.detection import Detection, DetectionResult
 from app.schemas.planogram import Planogram
 from app.schemas.shelf import ShelfAnalysis, SlotResult, SlotStatus
+
+# Minimum IoU for a detection to count as filling a slot.
+_MATCH_IOU = 0.3
 
 
 def _box_center(det: Detection) -> tuple[float, float]:
@@ -57,7 +64,7 @@ def map_to_grid(
 
     Rows come from y-clustering (top to bottom); within a row, columns
     are the left-to-right order of the boxes. Column counts may differ
-    between rows.
+    between rows. Used when authoring a planogram from a reference image.
     """
     grid: dict[tuple[int, int], Detection] = {}
     if result.width <= 0 or result.height <= 0:
@@ -69,23 +76,68 @@ def map_to_grid(
     return grid
 
 
+def _iou(a: Detection, b_box) -> float:
+    """Intersection-over-union between a detection box and a slot box."""
+    ix1 = max(a.box.x1, b_box.x1)
+    iy1 = max(a.box.y1, b_box.y1)
+    ix2 = min(a.box.x2, b_box.x2)
+    iy2 = min(a.box.y2, b_box.y2)
+    iw = max(0.0, ix2 - ix1)
+    ih = max(0.0, iy2 - iy1)
+    inter = iw * ih
+    if inter <= 0:
+        return 0.0
+    area_a = (a.box.x2 - a.box.x1) * (a.box.y2 - a.box.y1)
+    area_b = (b_box.x2 - b_box.x1) * (b_box.y2 - b_box.y1)
+    union = area_a + area_b - inter
+    return inter / union if union > 0 else 0.0
+
+
+def _match_slots_to_detections(
+    planogram: Planogram, dets: list[Detection]
+) -> dict[int, Detection]:
+    """Greedily pair each slot with the best-overlapping detection.
+
+    Returns {slot_index: detection}. Pairs are assigned highest-IoU
+    first so each detection fills at most one slot.
+    """
+    pairs = []
+    for si, slot in enumerate(planogram.slots):
+        for det in dets:
+            iou = _iou(det, slot.box)
+            if iou >= _MATCH_IOU:
+                pairs.append((iou, si, det))
+    pairs.sort(key=lambda p: p[0], reverse=True)
+
+    matched: dict[int, Detection] = {}
+    used_dets: set[int] = set()
+    for _iou_val, si, det in pairs:
+        if si in matched or id(det) in used_dets:
+            continue
+        matched[si] = det
+        used_dets.add(id(det))
+    return matched
+
+
 def compare_with_planogram(
     result: DetectionResult, planogram: Planogram, conf_threshold: float
 ) -> ShelfAnalysis:
-    """Compare mapped detections against expected layout."""
-    grid = map_to_grid(result, planogram.rows)
+    """Compare detections against the expected layout, by position."""
+    matched = _match_slots_to_detections(planogram, result.detections)
 
     slots: list[SlotResult] = []
     correct = missing = misplaced = 0
 
-    for slot in planogram.slots:
-        det = grid.get((slot.row, slot.col))
+    for si, slot in enumerate(planogram.slots):
+        det = matched.get(si)
         if det is None or det.confidence < conf_threshold:
-            status = SlotStatus.MISSING
             missing += 1
             slots.append(
                 SlotResult(
-                    row=slot.row, col=slot.col, expected=slot.expected, status=status
+                    row=slot.row,
+                    col=slot.col,
+                    expected=slot.expected,
+                    status=SlotStatus.MISSING,
                 )
             )
             continue
