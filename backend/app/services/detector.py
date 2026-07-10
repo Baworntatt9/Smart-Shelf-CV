@@ -1,15 +1,28 @@
 """Object detection service.
 
-Skeleton for **AI Eng 1**. Swap `MockDetector` for a real YOLOv8 wrapper
-(`ultralytics`) once weights are trained (Day 2-3). Keep the `predict`
-signature stable so the API/route layer does not change.
+`MockDetector` keeps the API runnable without weights; `YoloDetector`
+wraps an ultralytics YOLO model. `get_detector` builds the real detector
+from settings and falls back to the mock if weights are missing or
+ultralytics is not installed. The `predict` signature is stable so the
+route/matcher layers never change.
 """
 
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from pathlib import Path
 
+from app.core.config import Settings, get_settings
 from app.schemas.detection import BoundingBox, Detection, DetectionResult
+
+# backend/ root — weights paths in settings are relative to it.
+_BACKEND_ROOT = Path(__file__).resolve().parents[2]
+
+# Recall floor for inference. Boxes below this never reach the matcher;
+# the matcher then applies `conf_threshold` to decide correct/missing.
+# Keep it under the compliance threshold so low-confidence items still
+# surface as "detected but below threshold" rather than vanishing.
+_DETECT_CONF = 0.25
 
 
 class Detector(ABC):
@@ -23,7 +36,6 @@ class MockDetector(Detector):
     """Deterministic placeholder so the API runs before the model exists.
 
     Returns a fixed 3x6 grid of `cola` boxes over a 1280x800 canvas.
-    Replace with real inference in `YoloDetector`.
     """
 
     ROWS, COLS = 3, 6
@@ -51,23 +63,63 @@ class MockDetector(Detector):
         )
 
 
-# TODO(AI Eng 1): implement with ultralytics
-# class YoloDetector(Detector):
-#     def __init__(self, weights: str, conf: float):
-#         from ultralytics import YOLO
-#         self.model = YOLO(weights)
-#         self.conf = conf
-#
-#     def predict(self, image_bytes, filename):
-#         ...
+class YoloDetector(Detector):
+    """Ultralytics YOLO wrapper. Loads weights once, reused per request."""
+
+    def __init__(self, weights: str, conf: float = _DETECT_CONF) -> None:
+        from ultralytics import YOLO  # imported lazily so the mock path is dep-free
+
+        path = Path(weights)
+        if not path.is_absolute():
+            path = _BACKEND_ROOT / path
+        if not path.exists():
+            raise FileNotFoundError(f"weights not found: {path}")
+
+        self.model = YOLO(str(path))
+        self.names: dict[int, str] = self.model.names
+        self.conf = conf
+
+    def predict(self, image_bytes: bytes, filename: str) -> DetectionResult:
+        import numpy as np
+        from PIL import Image
+        import io
+
+        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        arr = np.asarray(img)  # HxWx3, RGB
+        h, w = arr.shape[:2]
+
+        result = self.model.predict(arr, conf=self.conf, verbose=False)[0]
+
+        detections: list[Detection] = []
+        for box in result.boxes:
+            x1, y1, x2, y2 = (float(v) for v in box.xyxy[0])
+            detections.append(
+                Detection(
+                    label=self.names[int(box.cls)],
+                    confidence=float(box.conf),
+                    box=BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2),
+                )
+            )
+        return DetectionResult(
+            filename=filename, width=w, height=h, detections=detections
+        )
 
 
 _detector: Detector | None = None
 
 
 def get_detector() -> Detector:
-    """FastAPI dependency — single shared detector instance."""
+    """FastAPI dependency — single shared detector instance.
+
+    Tries the real YOLO model; falls back to the mock if weights are
+    missing or ultralytics is unavailable, so the API always boots.
+    """
     global _detector
     if _detector is None:
-        _detector = MockDetector()
+        settings: Settings = get_settings()
+        try:
+            _detector = YoloDetector(settings.model_weights)
+        except Exception as exc:  # noqa: BLE001 — degrade gracefully
+            print(f"[detector] YOLO unavailable ({exc}); using MockDetector")
+            _detector = MockDetector()
     return _detector

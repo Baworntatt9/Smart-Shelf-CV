@@ -45,6 +45,18 @@ export default function Home() {
   const issues = result?.slots.filter((s) => s.status !== "correct") ?? [];
   const issueCount = result ? result.missing + result.misplaced : 0;
 
+  // Group slots into rows for the heatmap (rows have varying column counts).
+  const gridRows = result
+    ? Object.values(
+        result.slots.reduce<Record<number, typeof result.slots>>((acc, s) => {
+          (acc[s.row] ??= []).push(s);
+          return acc;
+        }, {})
+      )
+        .sort((a, b) => a[0].row - b[0].row)
+        .map((row) => [...row].sort((a, b) => a.col - b.col))
+    : null;
+
   return (
     <main className="flex w-full flex-col gap-[18px] px-6 pb-8 pt-5">
       <input
@@ -119,19 +131,42 @@ export default function Home() {
                   : "ขาด — · ผิดตำแหน่ง —"
               }
             />
-            <Metric label="Conf. threshold" value="0.50" mono hint="ค่าเริ่มต้น" />
+            <Metric label="Conf. threshold" value="0.25" mono hint="ค่าเริ่มต้น" />
           </div>
 
           {/* planogram grid */}
-          <Panel title="Planogram Grid" meta="3 × 6 · เทียบแผนผัง">
-            <div className="grid grid-cols-6 gap-1.5">
-              {(result?.slots ?? Array.from({ length: 18 })).map((_, i) => (
-                <GridCell
-                  key={i}
-                  status={result ? result.slots[i].status : undefined}
-                  code={result ? result.slots[i].expected : undefined}
-                />
-              ))}
+          <Panel
+            title="Planogram Grid"
+            meta={
+              gridRows
+                ? `${gridRows.length} แถว · ${result!.total} ช่อง`
+                : "เทียบแผนผัง"
+            }
+          >
+            <div className="flex flex-col gap-1">
+              {gridRows
+                ? gridRows.map((row, r) => (
+                    <div key={r} className="flex gap-1">
+                      {row.map((slot) => (
+                        <GridCell
+                          key={slot.col}
+                          status={slot.status}
+                          title={`R${slot.row + 1}·C${slot.col + 1} · ${slot.expected}${
+                            slot.detected && slot.detected !== slot.expected
+                              ? ` → ${slot.detected}`
+                              : ""
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  ))
+                : Array.from({ length: 3 }).map((_, r) => (
+                    <div key={r} className="flex gap-1">
+                      {Array.from({ length: 12 }).map((_, c) => (
+                        <GridCell key={c} />
+                      ))}
+                    </div>
+                  ))}
             </div>
           </Panel>
 

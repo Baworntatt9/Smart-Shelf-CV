@@ -18,7 +18,8 @@ class Settings(BaseSettings):
 
     # Model / inference
     model_weights: str = "models/best.pt"
-    conf_threshold: float = 0.5
+    # Low floor: this model's confidences run low on dense shelves.
+    conf_threshold: float = 0.25
 
     # Uploads
     max_upload_mb: int = 10

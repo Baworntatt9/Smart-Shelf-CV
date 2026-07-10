@@ -1,25 +1,26 @@
 import type { SlotStatus } from "@/lib/types";
 import { STATUS_STYLE } from "@/lib/status";
 
+// One cell in the planogram heatmap. Rows can be dense (20+ cols), so
+// cells flex to share the row width and show status by color + icon;
+// full detail (position, expected/detected) is in the hover title.
 export default function GridCell({
   status,
-  code,
+  title,
 }: {
   status?: SlotStatus;
-  code?: string;
+  title?: string;
 }) {
   if (!status) {
-    return <div className="aspect-square animate-pulse rounded-lg bg-border/40" />;
+    return <div className="h-7 flex-1 animate-pulse rounded bg-border/40" />;
   }
   const s = STATUS_STYLE[status];
   return (
     <div
-      className={`flex aspect-square flex-col items-center justify-center gap-0.5 rounded-lg border ${s.ring}`}
+      title={title}
+      className={`flex h-7 min-w-0 flex-1 items-center justify-center rounded border ${s.ring}`}
     >
-      <span className="font-mono text-[11px] font-semibold text-[#d5dce6]">
-        {code}
-      </span>
-      <span className={`text-xs font-bold leading-none ${s.tone}`}>
+      <span className={`text-[10px] font-bold leading-none ${s.tone}`}>
         {s.icon}
       </span>
     </div>
