@@ -88,7 +88,11 @@ class YoloDetector(Detector):
         arr = np.asarray(img)  # HxWx3, RGB
         h, w = arr.shape[:2]
 
-        result = self.model.predict(arr, conf=self.conf, verbose=False)[0]
+        # max_det raised above the YOLO default (300) so dense retail
+        # shelves aren't clipped mid-image.
+        result = self.model.predict(
+            arr, conf=self.conf, max_det=1000, verbose=False
+        )[0]
 
         detections: list[Detection] = []
         for box in result.boxes:

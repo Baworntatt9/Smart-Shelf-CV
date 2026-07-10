@@ -1,4 +1,4 @@
-import type { ShelfAnalysis } from "./types";
+import type { PlanogramInfo, ShelfAnalysis } from "./types";
 
 // Requests go to /api/* and are proxied to FastAPI via next.config.ts rewrites.
 const API_BASE = "/api";
@@ -17,9 +17,18 @@ async function handle<T>(res: Response): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export async function analyzeShelf(file: File): Promise<ShelfAnalysis> {
+export async function listPlanograms(): Promise<PlanogramInfo[]> {
+  const res = await fetch(`${API_BASE}/planograms`);
+  return handle<PlanogramInfo[]>(res);
+}
+
+export async function analyzeShelf(
+  file: File,
+  planogramId?: string
+): Promise<ShelfAnalysis> {
   const form = new FormData();
   form.append("file", file);
+  if (planogramId) form.append("planogram_id", planogramId);
   const res = await fetch(`${API_BASE}/analyze-shelf`, {
     method: "POST",
     body: form,

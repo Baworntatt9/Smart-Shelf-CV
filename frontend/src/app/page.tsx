@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Skeleton from "@/components/Skeleton";
 import { CheckCircleIcon } from "@/components/icons";
@@ -11,10 +11,11 @@ import Legend from "@/components/dashboard/Legend";
 import ConfControl from "@/components/dashboard/ConfControl";
 import Metric from "@/components/dashboard/Metric";
 import Panel from "@/components/dashboard/Panel";
+import PlanogramSelect from "@/components/dashboard/PlanogramSelect";
 import ShelfViewer from "@/components/dashboard/ShelfViewer";
-import { analyzeShelf } from "@/lib/api";
+import { analyzeShelf, listPlanograms } from "@/lib/api";
 import { applyThreshold } from "@/lib/threshold";
-import type { ShelfAnalysis } from "@/lib/types";
+import type { PlanogramInfo, ShelfAnalysis } from "@/lib/types";
 
 const CONF_FLOOR = 0.25; // backend detection floor — slider can't go lower
 
@@ -22,30 +23,55 @@ const ACCEPT = ["image/jpeg", "image/png", "image/webp"];
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const lastFile = useRef<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ShelfAnalysis | null>(null);
   const [show, setShow] = useState({ boxes: true, grid: false, labels: false });
   const [conf, setConf] = useState(CONF_FLOOR);
+  const [planograms, setPlanograms] = useState<PlanogramInfo[]>([]);
+  const [planogramId, setPlanogramId] = useState("");
 
-  async function handleFile(file: File | undefined) {
-    if (!file) return;
-    if (!ACCEPT.includes(file.type)) {
-      setError("รองรับเฉพาะไฟล์ JPEG / PNG / WebP");
-      return;
-    }
+  // Load the available reference planograms once, default to the first.
+  useEffect(() => {
+    listPlanograms()
+      .then((list) => {
+        setPlanograms(list);
+        if (list.length) setPlanogramId((cur) => cur || list[0].id);
+      })
+      .catch(() => {});
+  }, []);
+
+  // Detect + compare against the chosen planogram.
+  async function runAnalysis(file: File, pid: string) {
     setError(null);
     setResult(null);
-    setPreview(URL.createObjectURL(file));
     setLoading(true);
     try {
-      setResult(await analyzeShelf(file));
+      setResult(await analyzeShelf(file, pid));
     } catch (e) {
       setError(e instanceof Error ? e.message : "วิเคราะห์ไม่สำเร็จ");
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleFile(file: File | undefined) {
+    if (!file) return;
+    if (!ACCEPT.includes(file.type)) {
+      setError("รองรับเฉพาะไฟล์ JPEG / PNG / WebP");
+      return;
+    }
+    lastFile.current = file;
+    setPreview(URL.createObjectURL(file));
+    runAnalysis(file, planogramId);
+  }
+
+  // Switching the reference re-scores the current image against it.
+  function handlePlanogramChange(id: string) {
+    setPlanogramId(id);
+    if (lastFile.current) runAnalysis(lastFile.current, id);
   }
 
   // Re-derive the analysis at the chosen threshold (client-side, instant).
@@ -90,8 +116,14 @@ export default function Home() {
       <div className="grid items-start gap-[18px] lg:grid-cols-[minmax(0,1.75fr)_minmax(360px,0.92fr)]">
         {/* LEFT: VIEWER */}
         <section className="flex min-w-0 flex-col gap-3">
-          {/* toolbar — overlay toggles (disabled until a result exists) */}
-          <div className="flex flex-wrap items-center justify-end gap-2.5 rounded-xl border border-border bg-panel-2 px-3 py-2.5">
+          {/* toolbar — planogram picker + overlay toggles */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-border bg-panel-2 px-3 py-2.5">
+            <PlanogramSelect
+              options={planograms}
+              value={planogramId}
+              disabled={loading}
+              onChange={handlePlanogramChange}
+            />
             <div className="flex items-center gap-2">
               {(["boxes", "grid", "labels"] as const).map((k) => {
                 const active = show[k];

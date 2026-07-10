@@ -1,7 +1,9 @@
+// Status colours shared by the image overlay and the planogram grid.
 const ITEMS = [
   { swatch: "bg-ok", label: "ตรงตาม planogram" },
   { swatch: "bg-warn", label: "ผิดตำแหน่ง (Misplaced)" },
-  { swatch: "bg-bad", label: "ขาด / Stock-out" },
+  { swatch: "bg-cyan", label: "detect นอก grid" },
+  { swatch: "bg-muted", label: "ต่ำกว่าเกณฑ์ conf" },
 ];
 
 export default function Legend() {

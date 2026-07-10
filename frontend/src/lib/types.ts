@@ -26,6 +26,14 @@ export interface Detection {
   expected?: string | null;
 }
 
+export interface PlanogramInfo {
+  id: string;
+  name: string;
+  rows: number;
+  cols: number;
+  slots: number;
+}
+
 export interface ShelfAnalysis {
   filename: string;
   total: number;

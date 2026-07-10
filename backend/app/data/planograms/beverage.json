@@ -1,5 +1,6 @@
 {
-  "name": "beverage_shelf_ref",
+  "id": "beverage",
+  "name": "Beverage Shelf",
   "rows": 3,
   "cols": 24,
   "slots": [
