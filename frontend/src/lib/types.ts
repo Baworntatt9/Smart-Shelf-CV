@@ -22,6 +22,8 @@ export interface Detection {
   label: string;
   confidence: number;
   box: BoundingBox;
+  status?: SlotStatus | null; // set by the matcher: correct | misplaced
+  expected?: string | null;
 }
 
 export interface ShelfAnalysis {

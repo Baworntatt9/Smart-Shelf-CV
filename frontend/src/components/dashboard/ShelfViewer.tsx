@@ -3,10 +3,16 @@
 import { useState } from "react";
 
 import { UploadIcon } from "@/components/icons";
+import DetectionOverlay, {
+  type OverlayToggles,
+} from "@/components/dashboard/DetectionOverlay";
+import type { ShelfAnalysis } from "@/lib/types";
 
 interface Props {
   preview: string | null;
   loading: boolean;
+  result: ShelfAnalysis | null;
+  show: OverlayToggles;
   onPick: () => void;
   onFile: (file: File | undefined) => void;
 }
@@ -14,10 +20,16 @@ interface Props {
 export default function ShelfViewer({
   preview,
   loading,
+  result,
+  show,
   onPick,
   onFile,
 }: Props) {
   const [dragging, setDragging] = useState(false);
+  // Natural pixel size of the loaded image = the size detections are in.
+  const [dim, setDim] = useState<{ w: number; h: number } | null>(null);
+
+  const rows = result ? Math.max(...result.slots.map((s) => s.row)) + 1 : 0;
 
   return (
     <div
@@ -37,16 +49,34 @@ export default function ShelfViewer({
         setDragging(false);
         if (!loading) onFile(e.dataTransfer.files?.[0]);
       }}
-      className={`relative aspect-[16/10] w-full cursor-pointer overflow-hidden rounded-2xl border bg-gradient-to-b from-[#1b232f] via-[#131a24] to-[#0d131b] transition
+      className={`relative w-full cursor-pointer overflow-hidden rounded-2xl border bg-gradient-to-b from-[#1b232f] via-[#131a24] to-[#0d131b] transition
+        ${preview ? "" : "aspect-[16/10]"}
         ${dragging ? "border-accent" : "border-border"}`}
     >
       {preview ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={preview}
-          alt="ชั้นวางที่อัปโหลด"
-          className="h-full w-full object-contain"
-        />
+        <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={preview}
+            alt="ชั้นวางที่อัปโหลด"
+            onLoad={(e) =>
+              setDim({
+                w: e.currentTarget.naturalWidth,
+                h: e.currentTarget.naturalHeight,
+              })
+            }
+            className="block h-auto w-full"
+          />
+          {result && dim && (
+            <DetectionOverlay
+              detections={result.detections}
+              width={dim.w}
+              height={dim.h}
+              rows={rows}
+              show={show}
+            />
+          )}
+        </div>
       ) : (
         <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
           <UploadIcon size={34} className="text-accent" />

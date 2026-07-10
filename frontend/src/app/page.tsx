@@ -22,6 +22,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ShelfAnalysis | null>(null);
+  const [show, setShow] = useState({ boxes: true, grid: false, labels: false });
 
   async function handleFile(file: File | undefined) {
     if (!file) return;
@@ -81,23 +82,36 @@ export default function Home() {
       <div className="grid items-start gap-[18px] lg:grid-cols-[minmax(0,1.75fr)_minmax(360px,0.92fr)]">
         {/* LEFT: VIEWER */}
         <section className="flex min-w-0 flex-col gap-3">
-          {/* toolbar (scaffold until data drives it) */}
+          {/* toolbar — overlay toggles (disabled until a result exists) */}
           <div className="flex flex-wrap items-center justify-end gap-2.5 rounded-xl border border-border bg-panel-2 px-3 py-2.5">
             <div className="flex items-center gap-2">
-              {["Boxes", "Grid", "Labels"].map((t) => (
-                <span
-                  key={t}
-                  className="rounded-lg border border-[#2a3442] px-2.5 py-1.5 font-mono text-[11.5px] text-muted"
-                >
-                  {t}
-                </span>
-              ))}
+              {(["boxes", "grid", "labels"] as const).map((k) => {
+                const active = show[k];
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    disabled={!result}
+                    onClick={() => setShow((s) => ({ ...s, [k]: !s[k] }))}
+                    className={`rounded-lg border px-2.5 py-1.5 font-mono text-[11.5px] capitalize transition disabled:cursor-not-allowed disabled:opacity-40
+                      ${
+                        active
+                          ? "border-cyan/60 bg-cyan/15 text-cyan"
+                          : "cursor-pointer border-[#2a3442] text-muted hover:text-fg"
+                      }`}
+                  >
+                    {k}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           <ShelfViewer
             preview={preview}
             loading={loading}
+            result={result}
+            show={show}
             onPick={() => inputRef.current?.click()}
             onFile={handleFile}
           />

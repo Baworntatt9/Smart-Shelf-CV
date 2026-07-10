@@ -96,6 +96,9 @@ def compare_with_planogram(
         else:
             status = SlotStatus.MISPLACED
             misplaced += 1
+        # Tag the box so the frontend can colour it by compliance.
+        det.status = status.value
+        det.expected = slot.expected
         slots.append(
             SlotResult(
                 row=slot.row,

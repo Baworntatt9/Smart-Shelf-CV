@@ -11,11 +11,17 @@ class BoundingBox(BaseModel):
 
 
 class Detection(BaseModel):
-    """One raw detection from the model."""
+    """One detection from the model.
+
+    `status`/`expected` are filled in by the matcher once the box is
+    placed on the planogram grid (None on the raw-detection endpoint).
+    """
 
     label: str = Field(..., description="Product class, e.g. 'cola'")
     confidence: float = Field(..., ge=0, le=1)
     box: BoundingBox
+    status: str | None = None  # correct | misplaced (grid-relative)
+    expected: str | None = None  # planogram label at this box's slot
 
 
 class DetectionResult(BaseModel):
