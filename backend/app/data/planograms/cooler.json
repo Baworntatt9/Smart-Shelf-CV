@@ -1,0 +1,1048 @@
+{
+  "id": "cooler",
+  "name": "Cooler Beverage",
+  "rows": 5,
+  "cols": 50,
+  "slots": [
+    {
+      "row": 0,
+      "col": 0,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 8,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 9,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 10,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 11,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 12,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 13,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 14,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 15,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 16,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 17,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 18,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 19,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 20,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 21,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 22,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 23,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 24,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 25,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 26,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 27,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 28,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 29,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 30,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 31,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 32,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 33,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 34,
+      "expected": "Jar"
+    },
+    {
+      "row": 0,
+      "col": 35,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 36,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 37,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 38,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 39,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 40,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 41,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 42,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 43,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 44,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 45,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 46,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 47,
+      "expected": "Bottle"
+    },
+    {
+      "row": 0,
+      "col": 48,
+      "expected": "can"
+    },
+    {
+      "row": 0,
+      "col": 49,
+      "expected": "can"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 9,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 10,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 11,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 12,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 13,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 14,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 15,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 16,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 17,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 18,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 19,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 20,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 21,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 22,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 23,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 24,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 25,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 26,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 27,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 28,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 29,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 30,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 31,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 32,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 33,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 34,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 35,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 36,
+      "expected": "Jar"
+    },
+    {
+      "row": 1,
+      "col": 37,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 38,
+      "expected": "Bottle"
+    },
+    {
+      "row": 1,
+      "col": 39,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 6,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 9,
+      "expected": "can"
+    },
+    {
+      "row": 2,
+      "col": 10,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 11,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 12,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 13,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 14,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 15,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 16,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 17,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 18,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 19,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 20,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 21,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 22,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 23,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 24,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 25,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 26,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 27,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 28,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 29,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 30,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 31,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 32,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 33,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 34,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 35,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 36,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 37,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 38,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 39,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 40,
+      "expected": "Bottle"
+    },
+    {
+      "row": 2,
+      "col": 41,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 42,
+      "expected": "Jar"
+    },
+    {
+      "row": 2,
+      "col": 43,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 6,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 7,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 9,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 10,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 11,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 12,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 13,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 14,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 15,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 16,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 17,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 18,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 19,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 20,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 21,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 22,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 23,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 24,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 25,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 26,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 27,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 28,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 29,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 30,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 31,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 32,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 33,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 34,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 35,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 36,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 37,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 38,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 39,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 40,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 41,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 42,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 43,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 44,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 45,
+      "expected": "Bottle"
+    },
+    {
+      "row": 3,
+      "col": 46,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 47,
+      "expected": "Jar"
+    },
+    {
+      "row": 3,
+      "col": 48,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 0,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 6,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 7,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 9,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 10,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 11,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 12,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 13,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 14,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 15,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 16,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 17,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 18,
+      "expected": "Bottle"
+    },
+    {
+      "row": 4,
+      "col": 19,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 20,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 21,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 22,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 23,
+      "expected": "Jar"
+    },
+    {
+      "row": 4,
+      "col": 24,
+      "expected": "Jar"
+    }
+  ]
+}
