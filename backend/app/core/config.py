@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:3000"
 
     # Model / inference
-    model_weights: str = "models/yolov8n.pt"
+    model_weights: str = "models/best.pt"
     conf_threshold: float = 0.5
 
     # Uploads

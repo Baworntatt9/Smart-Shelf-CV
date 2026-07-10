@@ -37,3 +37,6 @@ yarn-error.log*
 *.weights
 runs/
 datasets/
+
+# ...except the shipped trained model
+!backend/models/best.pt
