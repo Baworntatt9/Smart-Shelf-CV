@@ -21,6 +21,9 @@ class Planogram(BaseModel):
     rows: int
     cols: int
     slots: list[PlanogramSlot]
+    # Bundled example shelf photo (filename under app/data/samples/), served
+    # as the zero-upload demo so visitors see a populated dashboard on arrival.
+    sample: str | None = None
 
 
 class PlanogramInfo(BaseModel):

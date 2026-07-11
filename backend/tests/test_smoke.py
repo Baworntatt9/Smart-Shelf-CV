@@ -3,8 +3,13 @@ import io
 from fastapi.testclient import TestClient
 
 from app.main import app
+from app.services.planogram_store import load_planogram
 
 client = TestClient(app)
+
+# Expected shape comes from the default planogram, so these tests track
+# whichever planogram the store serves instead of hard-coding a grid.
+_DEFAULT = load_planogram()
 
 
 def _png_bytes() -> bytes:
@@ -24,8 +29,8 @@ def test_get_planogram():
     r = client.get("/api/get-planogram")
     assert r.status_code == 200
     body = r.json()
-    assert body["rows"] == 3 and body["cols"] == 6
-    assert len(body["slots"]) == 18
+    assert body["rows"] == _DEFAULT.rows and body["cols"] == _DEFAULT.cols
+    assert len(body["slots"]) == len(_DEFAULT.slots)
 
 
 def test_analyze_shelf():
@@ -33,8 +38,8 @@ def test_analyze_shelf():
     r = client.post("/api/analyze-shelf", files=files)
     assert r.status_code == 200
     body = r.json()
-    assert body["total"] == 18
-    assert len(body["slots"]) == 18
+    assert len(body["slots"]) == len(_DEFAULT.slots)
+    assert body["total"] == len(body["slots"])
     assert "compliance_pct" in body
 
 

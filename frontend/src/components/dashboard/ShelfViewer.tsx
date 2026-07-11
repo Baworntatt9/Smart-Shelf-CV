@@ -84,10 +84,10 @@ export default function ShelfViewer({
         <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
           <UploadIcon size={34} className="text-accent" />
           <div className="text-sm font-medium">
-            ลากรูปชั้นวางมาวาง หรือ คลิกเพื่อเลือกไฟล์
+            เลือก “ตัวอย่าง” ด้านบน หรือ อัปโหลดรูปชั้นวางของคุณ
           </div>
           <div className="text-xs text-muted">
-            JPEG · PNG · WebP · สูงสุด 10 MB
+            ลากรูปมาวาง / คลิก · JPEG · PNG · WebP · สูงสุด 10 MB
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 {
   "id": "cooler-mini",
   "name": "Cooler Mini",
+  "sample": "cooler_mini.jpg",
   "rows": 3,
   "cols": 31,
   "slots": [

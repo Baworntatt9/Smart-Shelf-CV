@@ -13,9 +13,15 @@ import Metric from "@/components/dashboard/Metric";
 import Panel from "@/components/dashboard/Panel";
 import PlanogramSelect from "@/components/dashboard/PlanogramSelect";
 import ShelfViewer from "@/components/dashboard/ShelfViewer";
-import { analyzeShelf, listPlanograms } from "@/lib/api";
+import {
+  analyzeShelf,
+  demoAnalysis,
+  listDemoScenes,
+  listPlanograms,
+  sampleImageUrl,
+} from "@/lib/api";
 import { applyThreshold } from "@/lib/threshold";
-import type { PlanogramInfo, ShelfAnalysis } from "@/lib/types";
+import type { DemoScene, PlanogramInfo, ShelfAnalysis } from "@/lib/types";
 
 const CONF_FLOOR = 0.25; // backend detection floor — slider can't go lower
 
@@ -32,14 +38,21 @@ export default function Home() {
   const [conf, setConf] = useState(CONF_FLOOR);
   const [planograms, setPlanograms] = useState<PlanogramInfo[]>([]);
   const [planogramId, setPlanogramId] = useState("");
+  const [scenes, setScenes] = useState<DemoScene[]>([]);
+  const [sceneId, setSceneId] = useState<string | null>(null);
 
-  // Load the available reference planograms once, default to the first.
+  // Load the reference planograms and demo scenes once. Deliberately do NOT
+  // run any analysis on arrival — the visitor picks a scene (or uploads)
+  // first, then the dashboard populates.
   useEffect(() => {
     listPlanograms()
       .then((list) => {
         setPlanograms(list);
-        if (list.length) setPlanogramId((cur) => cur || list[0].id);
+        if (list[0]) setPlanogramId(list[0].id);
       })
+      .catch(() => {});
+    listDemoScenes()
+      .then(setScenes)
       .catch(() => {});
   }, []);
 
@@ -57,6 +70,23 @@ export default function Home() {
     }
   }
 
+  // Simulated upload: score a chosen demo scene's bundled image and show it.
+  async function runScene(id: string) {
+    lastFile.current = null;
+    setSceneId(id);
+    setError(null);
+    setResult(null);
+    setPreview(sampleImageUrl(id));
+    setLoading(true);
+    try {
+      setResult(await demoAnalysis(id));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "โหลดตัวอย่างไม่สำเร็จ");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   function handleFile(file: File | undefined) {
     if (!file) return;
     if (!ACCEPT.includes(file.type)) {
@@ -64,14 +94,16 @@ export default function Home() {
       return;
     }
     lastFile.current = file;
+    setSceneId(null);
     setPreview(URL.createObjectURL(file));
     runAnalysis(file, planogramId);
   }
 
-  // Switching the reference re-scores the current image against it.
+  // Switching the reference re-scores whatever is loaded (upload or scene).
   function handlePlanogramChange(id: string) {
     setPlanogramId(id);
     if (lastFile.current) runAnalysis(lastFile.current, id);
+    else if (sceneId) runScene(sceneId);
   }
 
   // Re-derive the analysis at the chosen threshold (client-side, instant).
@@ -146,6 +178,34 @@ export default function Home() {
               })}
             </div>
           </div>
+
+          {/* demo scene picker — nothing loads until the visitor picks one */}
+          {scenes.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-panel-2 px-3 py-2.5">
+              <span className="font-mono text-[11.5px] text-muted">
+                ตัวอย่าง
+              </span>
+              {scenes.map((s) => {
+                const active = sceneId === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    disabled={loading}
+                    onClick={() => runScene(s.id)}
+                    className={`rounded-lg border px-3 py-1.5 text-[12.5px] transition disabled:cursor-not-allowed disabled:opacity-40
+                      ${
+                        active
+                          ? "border-cyan/60 bg-cyan/15 text-cyan"
+                          : "cursor-pointer border-[#2a3442] text-muted hover:text-fg"
+                      }`}
+                  >
+                    {s.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           <ShelfViewer
             preview={preview}

@@ -9,7 +9,7 @@ from app.schemas.planogram import Planogram, PlanogramInfo
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "planograms"
 
 # The planogram served when a request names none.
-DEFAULT_PLANOGRAM_ID = "coffee"
+DEFAULT_PLANOGRAM_ID = "cooler-mini"
 
 
 @lru_cache

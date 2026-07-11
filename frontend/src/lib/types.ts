@@ -26,6 +26,11 @@ export interface Detection {
   expected?: string | null;
 }
 
+export interface DemoScene {
+  id: string;
+  label: string;
+}
+
 export interface PlanogramInfo {
   id: string;
   name: string;

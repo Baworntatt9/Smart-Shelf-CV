@@ -1,4 +1,4 @@
-import type { PlanogramInfo, ShelfAnalysis } from "./types";
+import type { DemoScene, PlanogramInfo, ShelfAnalysis } from "./types";
 
 // Requests go to /api/* and are proxied to FastAPI via next.config.ts rewrites.
 const API_BASE = "/api";
@@ -34,4 +34,23 @@ export async function analyzeShelf(
     body: form,
   });
   return handle<ShelfAnalysis>(res);
+}
+
+// Zero-upload demo scenes (normal / missing / misplaced), picked by button.
+export async function listDemoScenes(): Promise<DemoScene[]> {
+  const res = await fetch(`${API_BASE}/demo-scenes`);
+  return handle<DemoScene[]>(res);
+}
+
+// Analyse a chosen demo scene's bundled image.
+export async function demoAnalysis(sceneId: string): Promise<ShelfAnalysis> {
+  const res = await fetch(
+    `${API_BASE}/demo-analysis?scene=${encodeURIComponent(sceneId)}`
+  );
+  return handle<ShelfAnalysis>(res);
+}
+
+// URL of the scene's photo — use as the viewer preview.
+export function sampleImageUrl(sceneId: string): string {
+  return `${API_BASE}/sample-image?scene=${encodeURIComponent(sceneId)}`;
 }
