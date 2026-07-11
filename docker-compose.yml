@@ -1,0 +1,25 @@
+# Local prod-parity stack: build both images and wire the frontend to the
+# backend over the compose network. Override env for real deploys.
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "false"
+      # Allow the browser-facing frontend origin to call the API directly.
+      CORS_ORIGINS: "http://localhost:3000"
+      MODEL_WEIGHTS: "models/best.pt"
+      CONF_THRESHOLD: "0.25"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the build — next.config rewrites() freezes this at build
+        # time, so it can't be an environment var. In-network backend address.
+        BACKEND_URL: "http://backend:8000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
