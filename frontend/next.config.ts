@@ -1,19 +1,26 @@
 import type { NextConfig } from "next";
-import path from "node:path";
+
+// These options exist only to make the self-hosted Docker image work; on
+// Vercel they break the build (Vercel manages output + file tracing itself,
+// and `output: "standalone"` makes its adapter look for a .next/package.json
+// that isn't there). Vercel sets VERCEL=1, so apply them everywhere else.
+const dockerOnly: NextConfig = process.env.VERCEL
+  ? {}
+  : {
+      // Self-contained server bundle for the Docker runtime image.
+      output: "standalone",
+      // A stray package-lock.json above this dir makes Next guess the wrong
+      // workspace root and nest the standalone output, breaking Docker COPY
+      // paths. Pin the root to this project.
+      outputFileTracingRoot: __dirname,
+      turbopack: { root: __dirname },
+    };
 
 const nextConfig: NextConfig = {
-  // Emit a self-contained server bundle so the Docker runtime image only
-  // needs the .next/standalone output plus static assets — no node_modules.
-  output: "standalone",
+  ...dockerOnly,
 
-  // A stray package-lock.json above this dir makes Next guess the wrong
-  // workspace root and nest the standalone output under sub-dirs, breaking
-  // the Docker COPY paths. Pin the root to this project.
-  outputFileTracingRoot: __dirname,
-  turbopack: { root: __dirname },
-
-  // Proxy API calls to the FastAPI backend during development so the browser
-  // hits a same-origin path and we avoid CORS in dev.
+  // Proxy API calls to the FastAPI backend so the browser hits a same-origin
+  // path. BACKEND_URL is baked at build time (set it per environment).
   async rewrites() {
     const backend = process.env.BACKEND_URL ?? "http://localhost:8000";
     return [{ source: "/api/:path*", destination: `${backend}/api/:path*` }];
