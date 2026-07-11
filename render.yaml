@@ -1,0 +1,23 @@
+# Render Blueprint — backend only. The frontend deploys on Vercel.
+# torch + ultralytics need ~2 GB RAM at inference, so the free/starter 512 MB
+# tiers OOM — use a plan with >= 2 GB (standard).
+services:
+  - type: web
+    name: smart-shelf-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: standard
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DEBUG
+        value: "false"
+      # Set to the deployed Vercel frontend origin (no trailing slash), e.g.
+      # https://smart-shelf-cv.vercel.app — update after the frontend is live.
+      - key: CORS_ORIGINS
+        sync: false
+      - key: MODEL_WEIGHTS
+        value: "models/best.pt"
+      - key: CONF_THRESHOLD
+        value: "0.25"
