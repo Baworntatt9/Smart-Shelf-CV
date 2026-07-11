@@ -28,10 +28,6 @@ export default function Header({ onUpload, disabled }: Props) {
         <div className="flex items-center gap-2.5 rounded-[10px] border border-border bg-panel px-3 py-2">
           <span className="h-2 w-2 rounded-full bg-ok shadow-[0_0_0_3px_rgba(34,197,94,0.18)]" />
           <span className="font-mono text-[12.5px] text-[#b9c2d0]">YOLOv8n</span>
-          <span className="h-3 w-px bg-[#2b3543]" />
-          <span className="font-mono text-[12.5px] text-muted">
-            mAP <b className="text-fg">—</b>
-          </span>
         </div>
         <button
           type="button"
